@@ -5,6 +5,8 @@ import { useSession, signIn, signOut } from 'next-auth/client';
 const Home = () => {
   const [session, loading] = useSession();
 
+  console.log('session', session)
+
   if (loading) {
     return <h1>Loading...</h1>;
   }
