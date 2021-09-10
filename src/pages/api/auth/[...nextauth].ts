@@ -3,7 +3,7 @@ import EmailProvider from 'next-auth/providers/email';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { PrismaClient } from '@prisma/client';
 import GitHubProvider from 'next-auth/providers/github';
-// import CredentialsProvider from 'next-auth/providers/credentials';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 const prisma = new PrismaClient();
 
@@ -41,7 +41,6 @@ export default NextAuth({
     //       return user;
     //     }
     //     // Return null if user data could not be retrieved
-    //     return null;
     //   },
     // }),
     GitHubProvider({
@@ -90,11 +89,11 @@ export default NextAuth({
   // pages is not specified for that route.
   // https://next-auth.js.org/configuration/pages
   pages: {
-    signIn: '/signin', // Displays signin buttons
+    // signIn: '/auth/signin', // Displays signin buttons
     // signOut: '/auth/signout', // Displays form with sign out button
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // Used for check email page
-    // newUser: null // If set, new users will be directed here on first sign in
+    newUser: '/bully', // If set, new users will be directed here on first sign in
   },
 
   // Callbacks are asynchronous functions you can use to control what happens
