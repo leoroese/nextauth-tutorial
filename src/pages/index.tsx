@@ -1,13 +1,11 @@
 import React from 'react';
-import { useSession, signIn, signOut } from 'next-auth/client';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 // using client side session retrieval
 const Home = () => {
-  const [session, loading] = useSession();
+  const { data: session, status } = useSession();
 
-  console.log('session', session)
-
-  if (loading) {
+  if (status === 'loading') {
     return <h1>Loading...</h1>;
   }
   if (session) {

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import jwt from 'next-auth/jwt';
+import * as jwt from 'next-auth/jwt';
 
 const secret = process.env.SECRET;
 
