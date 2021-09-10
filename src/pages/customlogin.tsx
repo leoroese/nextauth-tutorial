@@ -49,8 +49,8 @@ const SignIn: FC = () => {
         <>
           <br />
           <br />
-          <button type="button">
-            <a href={providers?.email.signinUrl ?? 'http://localhost:3000'}>Email Login Bro</a>
+          <button type="button" onClick={() => signIn(providers.email.id)}>
+            Email Login Bro
           </button>
         </>
       )}
@@ -58,8 +58,8 @@ const SignIn: FC = () => {
         <>
           <br />
           <br />
-          <button type="button">
-            <a href={providers?.github.signinUrl ?? 'http://localhost:3000'}>Github Login Sister</a>
+          <button type="button" onClick={() => signIn(providers.github.id)}>
+            Github Login Sis
           </button>
         </>
       )}
