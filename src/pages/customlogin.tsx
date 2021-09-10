@@ -1,13 +1,21 @@
 import React, { FC, useState, useEffect } from 'react';
-import { useSession, getProviders, signOut, signIn, ClientSafeProvider, LiteralUnion } from 'next-auth/react';
+import { getProviders, signOut, signIn, ClientSafeProvider, LiteralUnion } from 'next-auth/react';
 import { BuiltInProviderType } from 'next-auth/providers';
+import { useSession } from '@src/lib/next-auth-react-query';
 
 const SignIn: FC = () => {
   const [providers, setproviders] = useState<Record<
     LiteralUnion<BuiltInProviderType, string>,
     ClientSafeProvider
   > | null>();
-  const { data: session, status } = useSession();
+  const [session, loading] = useSession({
+    required: true,
+    redirectTo: 'http://localhost:3000',
+    queryConfig: {
+      staleTime: 60 * 1000 * 60 * 3, // 3 hours
+      refetchInterval: 60 * 1000 * 5, // 5 minutes
+    },
+  });
 
   useEffect(() => {
     const setTheProviders = async () => {
@@ -17,7 +25,7 @@ const SignIn: FC = () => {
     setTheProviders();
   }, []);
 
-  if (status === 'loading') {
+  if (loading) {
     return <h1>Loading...</h1>;
   }
   if (session) {

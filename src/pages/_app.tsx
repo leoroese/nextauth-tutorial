@@ -1,14 +1,16 @@
 import React from 'react';
-import { SessionProvider } from 'next-auth/react';
 import { AppProps } from 'next/app';
+import { QueryClientProvider, QueryClient } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
-// Use the <Provider> to improve performance and allow components that call
-// `useSession()` anywhere in your application to access the `session` object.
+const queryClient = new QueryClient();
+
 const App = ({ Component, pageProps }: AppProps) => (
-  <SessionProvider session={pageProps.session}>
+  <QueryClientProvider client={queryClient}>
+    <ReactQueryDevtools initialIsOpen={false} />
     {/* eslint-disable-next-line react/jsx-props-no-spreading */}
     <Component {...pageProps} />
-  </SessionProvider>
+  </QueryClientProvider>
 );
 
 export default App;
