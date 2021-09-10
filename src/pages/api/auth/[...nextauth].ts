@@ -1,12 +1,17 @@
 import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers';
+import EmailProvider from 'next-auth/providers/email';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 // For more information on each option (and a full list of options) go to
 // https://next-auth.js.org/configuration/options
 export default NextAuth({
   // https://next-auth.js.org/configuration/providers
+  adapter: PrismaAdapter(prisma),
   providers: [
-    Providers.Email({
+    EmailProvider({
       server: process.env.EMAIL_SERVER,
       from: process.env.EMAIL_FROM,
     }),
@@ -47,13 +52,6 @@ export default NextAuth({
     //   domain: process.env.AUTH0_DOMAIN,
     // }),
   ],
-  // Database optional. MySQL, Maria DB, Postgres and MongoDB are supported.
-  // https://next-auth.js.org/configuration/databases
-  //
-  // Notes:
-  // * You must install an appropriate node_module for your database
-  // * The Email provider requires a database (OAuth providers do not)
-  database: process.env.DATABASE_URL,
 
   // The secret should be set to a reasonably long random string.
   // It is used to sign cookies and to sign and encrypt JSON Web Tokens, unless
@@ -114,7 +112,10 @@ export default NextAuth({
 
   // Events are useful for logging
   // https://next-auth.js.org/configuration/events
-  events: {},
+  events: {
+    // signOut({token, session}),
+    // updateUser({ user })
+  },
 
   // You can set the theme to 'light', 'dark' or use 'auto' to default to the
   // whatever prefers-color-scheme is set to in the browser. Default is 'auto'
